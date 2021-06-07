@@ -8,3 +8,5 @@ comus
 
 规则挑战时间 
 1小时
+
+npm cache clean --force
