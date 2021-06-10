@@ -1,20 +1,23 @@
-import { useEffect } from 'react'
-import Md5 from './md5.min'
+import { useEffect, useState } from 'react'
+import http from './http'
 const Home = () => {
-  const appid = '20210601000849775'
-  const key = 'uBb7ZcKZjtJ1aFQsWARw'
-  const from = 'auto'
-  const to = 'auto'
   const query = 'word'// 取输入框的val
   const q = encodeURIComponent(query)// 编码UTF-8
-  const salt = (new Date()).getTime()
-  const str1 = appid + query + salt + key// 秘钥
-  const sign = Md5(str1)// md5加密
+  const [data, setData] = useState('')
   useEffect(() => {
-
-  }, [])
+    if (!data) {
+      http.get('/api/get_word', { params: { q } })
+        .then((res) => {
+          console.log(res)
+          setData(res.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }, [data])
   return (
-    123456
+    <div>123456</div>
   )
 }
 export default Home

@@ -1,18 +1,11 @@
 import axios from 'axios'
 import Cors from 'cors'
-import initMiddleware from '../lib/init-middleware'
 
 // axios.defaults.baseURL = 'http://api.fanyi.baidu.com/api/trans/vip/translate'
-axios.defaults.withCredentials = true
-axios.defaults.timeout = 100000
+// axios.defaults.withCredentials = true
+// axios.defaults.timeout = 100000
+// axios.defaults.responseType = 'json'
 // axios.defaults.headers = { 'Content-Type': 'application/json;charset=UTF-8' }
-// axios.defaults.responseType = 'jsonp'
-
-const cors = initMiddleware(
-  Cors({
-    methods: ['GET', 'POST', 'OPTIONS']
-  })
-)
 
 const http = {
   post: '',
@@ -20,7 +13,17 @@ const http = {
   put: '',
   del: ''
 }
+axios.create(Cors())
 
+axios.create({
+  method: http.get ? 'get' : 'post',
+  baseURL: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+  timeout: 10000,
+  responseType: 'json',
+  headers: http.get
+    ? { 'Content-Type': 'application/json;charset=UTF-8' }
+    : { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' }
+})
 http.post = function (api, data) {
   // const params = JSON.stringify(data)
   const params = data
