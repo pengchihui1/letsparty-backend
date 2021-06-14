@@ -9,14 +9,14 @@ const cors = initMiddleware(
   })
 )
 
-export default async function handler (req, res) {
+export default async function handler(req, res) {
   await cors(req, res)
-  // console.log(req)
+  console.log(req.query.q)
   const appid = '20210601000849775'
   const key = 'uBb7ZcKZjtJ1aFQsWARw'
   const from = 'auto'
   const to = 'auto'
-  const query = 'word'// 取输入框的val
+  const query = req.query.q// 取输入框的val
   const q = encodeURIComponent(query)// 编码UTF-8
   const salt = (new Date()).getTime()
   const str1 = appid + query + salt + key// 秘钥
